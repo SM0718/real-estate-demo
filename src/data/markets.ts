@@ -1,0 +1,60 @@
+import type { Market } from '@/types'
+
+export const markets: Market[] = [
+  {
+    id: 'mumbai',
+    city: 'Mumbai',
+    properties: 3,
+    sqft: '1.2M',
+    position: { x: 52, y: 30 },
+    anchor: 'Grade A Office · Data Centres',
+  },
+  {
+    id: 'delhi-ncr',
+    city: 'Delhi NCR',
+    properties: 2,
+    sqft: '990K',
+    position: { x: 43, y: 24 },
+    anchor: 'Office · Mixed Use',
+  },
+  {
+    id: 'bengaluru',
+    city: 'Bengaluru',
+    properties: 2,
+    sqft: '1.0M',
+    position: { x: 68, y: 55 },
+    anchor: 'Technology Campus · Office',
+  },
+  {
+    id: 'hyderabad',
+    city: 'Hyderabad',
+    properties: 1,
+    sqft: '390K',
+    position: { x: 62, y: 48 },
+    anchor: 'Mixed Use · Retail',
+  },
+  {
+    id: 'pune',
+    city: 'Pune',
+    properties: 2,
+    sqft: '1.3M',
+    position: { x: 57, y: 36 },
+    anchor: 'Industrial · Logistics',
+  },
+  {
+    id: 'chennai',
+    city: 'Chennai',
+    properties: 2,
+    sqft: '1.0M',
+    position: { x: 63, y: 62 },
+    anchor: 'Industrial · Logistics',
+  },
+  {
+    id: 'kolkata',
+    city: 'Kolkata',
+    properties: 1,
+    sqft: '210K',
+    position: { x: 37, y: 33 },
+    anchor: 'Retail',
+  },
+]
