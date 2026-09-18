@@ -12,7 +12,10 @@ export function Hero() {
     offset: ['start start', 'end start'],
   })
 
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '16%'])
+  // Translate the background down by exactly the amount the hero has scrolled
+  // off-screen so the image stays pinned to the viewport while the page
+  // content scrolls over it.
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '100%'])
   const contentY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : -90])
   const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, reduced ? 1 : 0])
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0.45, reduced ? 0.45 : 0.9])
@@ -85,6 +88,7 @@ export function Hero() {
           <RevealLines
             className="text-[clamp(2.9rem,8.5vw,7.75rem)]"
             delay={0.35}
+            trigger="mount"
           >
             <span className="block">BUILDING</span>
             <span className="block">THE FUTURE</span>

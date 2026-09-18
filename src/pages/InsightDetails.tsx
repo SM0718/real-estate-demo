@@ -1,4 +1,6 @@
+import { useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { Calendar, Clock, User } from 'lucide-react'
 import { useInsight, useRelatedInsights } from '@/api/queries'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -7,7 +9,6 @@ import { InsightCard } from '@/components/insights/InsightCard'
 import { SectionDivider } from '@/components/shared/SectionDivider'
 import { AnimatedButton } from '@/components/shared/AnimatedButton'
 import { Reveal } from '@/components/shared/Reveal'
-import { ParallaxImage } from '@/components/shared/ParallaxImage'
 import { AnimatedWords } from '@/components/shared/AnimatedText'
 import { Seo } from '@/components/seo/Seo'
 
@@ -15,6 +16,10 @@ export default function InsightDetails() {
   const { slug = '' } = useParams()
   const { data: insight, isLoading, isError, refetch } = useInsight(slug)
   const { data: related } = useRelatedInsights(insight)
+  const reduced = useReducedMotion()
+  const heroRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '100%'])
 
   if (isLoading) return <InsightSkeleton />
   if (isError || !insight) {
@@ -34,13 +39,17 @@ export default function InsightDetails() {
       <Seo title={`${insight.title} | Vantage Insights`} description={insight.excerpt} />
 
       {/* Hero */}
-      <section className="relative flex min-h-[70vh] items-end overflow-hidden bg-ink pt-32 pb-16 md:pt-40">
-        <ParallaxImage
-          src={insight.image}
-          alt={insight.title}
-          className="absolute inset-0"
-          speed={0.1}
-        />
+      <section
+        ref={heroRef}
+        className="relative flex min-h-[70vh] items-end overflow-hidden bg-ink pt-32 pb-16 md:pt-40"
+      >
+        <motion.div className="absolute inset-0" style={{ y: bgY }}>
+          <img
+            src={insight.image}
+            alt={insight.title}
+            className="h-full w-full object-cover"
+          />
+        </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/55 to-ink/40" />
         <div className="container-x relative z-10">
           <Reveal>
@@ -51,7 +60,7 @@ export default function InsightDetails() {
             </div>
           </Reveal>
           <h1 className="serif-display mt-6 max-w-4xl text-[clamp(2.2rem,5.5vw,4.75rem)] text-bone">
-            <AnimatedWords text={insight.title} delay={0.2} />
+            <AnimatedWords text={insight.title} delay={0.2} trigger="mount" />
           </h1>
           <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-bone/70">
             <span className="flex items-center gap-2">

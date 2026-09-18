@@ -11,14 +11,17 @@ interface PageHeroProps {
 }
 
 /**
- * Full-bleed editorial hero used on every inner page: image with parallax,
- * layered overlay and headline reveal.
+ * Full-bleed editorial hero used on every inner page: the image stays pinned
+ * to the viewport (fixed background) while the page content scrolls over it,
+ * with a layered overlay and headline reveal.
  */
 export function PageHero({ eyebrow, title, image, description, alt }: PageHeroProps) {
   const reduced = useReducedMotion()
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '14%'])
+  // Translate the background down by exactly the amount the hero has scrolled
+  // off-screen so the image stays fixed while the content scrolls over it.
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '100%'])
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.75], [0.55, reduced ? 0.55 : 0.92])
 
   return (
@@ -43,7 +46,7 @@ export function PageHero({ eyebrow, title, image, description, alt }: PageHeroPr
 
         {title.split('\n').length > 1 ? (
           <h1 className="serif-display max-w-4xl text-[clamp(2.6rem,7vw,6.5rem)] text-bone">
-            <RevealLines delay={0.2}>
+            <RevealLines delay={0.2} trigger="mount">
               {title.split('\n').map((line, i) => (
                 <span key={i} className="block">
                   {i === title.split('\n').length - 1 ? line.replace(/\.$/, '') + '.' : line}
@@ -53,7 +56,7 @@ export function PageHero({ eyebrow, title, image, description, alt }: PageHeroPr
           </h1>
         ) : (
           <h1 className="serif-display max-w-4xl text-[clamp(2.6rem,7vw,6.5rem)] text-bone">
-            <AnimatedWords text={title} delay={0.15} />
+            <AnimatedWords text={title} delay={0.15} trigger="mount" />
           </h1>
         )}
 

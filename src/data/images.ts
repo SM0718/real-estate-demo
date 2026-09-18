@@ -33,6 +33,10 @@ export const IMAGES = {
   skyAerial: u('photo-1449824913935-59a10b8d2000'),
   hotel: u('photo-1566073771259-6a8506099945'),
   glassCorners: u('photo-1439420512658-3f8fcbf5e8b4'),
+  portrait1: u('photo-1560250097-0b93528c311a', 800),
+  portrait2: u('photo-1573496359142-b8d87734a5a2', 800),
+  portrait3: u('photo-1507003211169-0a1dd7228f2d', 800),
+  portrait4: u('photo-1519085360753-af0119f7cbe7', 800),
 } as const
 
 export type ImageKey = keyof typeof IMAGES

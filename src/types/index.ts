@@ -107,3 +107,31 @@ export interface PropertyFilters {
   size: string
   query: string
 }
+
+export interface Leader {
+  name: string
+  role: string
+  bio: string
+  image: string
+}
+
+export interface Award {
+  year: string
+  title: string
+  org: string
+}
+
+export interface CaseStudy {
+  id: string
+  title: string
+  category: AssetClass
+  location: string
+  image: string
+  summary: string
+  metrics: { label: string; value: string }[]
+}
+
+export interface Faq {
+  question: string
+  answer: string
+}

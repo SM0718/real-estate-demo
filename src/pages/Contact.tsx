@@ -3,7 +3,9 @@ import { PageHero } from '@/components/shared/PageHero'
 import { ContactForm } from '@/components/contact/ContactForm'
 import { SectionDivider } from '@/components/shared/SectionDivider'
 import { Reveal } from '@/components/shared/Reveal'
+import { Accordion } from '@/components/shared/Accordion'
 import { COMPANY } from '@/data/company'
+import { faqs } from '@/data/faqs'
 import { IMAGES } from '@/data/images'
 import { Seo } from '@/components/seo/Seo'
 
@@ -76,6 +78,27 @@ export default function Contact() {
               Contact details shown are illustrative demo information.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="bg-ink py-20 text-bone md:py-28" aria-label="Frequently asked questions">
+        <div className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+          <div>
+            <SectionDivider index="F" label="FAQ" dark className="mb-8" />
+            <h2 className="serif-display text-3xl text-bone md:text-5xl">
+              Answers, before you ask.
+            </h2>
+            <Reveal delay={0.15} className="mt-6">
+              <p className="max-w-xs text-sm leading-relaxed text-bone/60">
+                A few questions we hear often. If yours is missing, our team
+                responds within one business day.
+              </p>
+            </Reveal>
+          </div>
+          <Reveal delay={0.1}>
+            <Accordion items={faqs} dark />
+          </Reveal>
         </div>
       </section>
     </>

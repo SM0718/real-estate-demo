@@ -3,6 +3,7 @@ import { Search } from 'lucide-react'
 import { useProperties } from '@/api/queries'
 import { PageHero } from '@/components/shared/PageHero'
 import { PropertyCard } from '@/components/properties/PropertyCard'
+import { MetricCounter } from '@/components/shared/MetricCounter'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ErrorState } from '@/components/shared/ErrorState'
 import { Seo } from '@/components/seo/Seo'
@@ -69,6 +70,15 @@ export default function Properties() {
     setDebouncedQuery('')
   }
 
+  const totals = useMemo(() => {
+    if (!data) return null
+    const assets = data.length
+    const cities = new Set(data.map((p) => p.location.city)).size
+    const sf = data.reduce((acc, p) => acc + p.areaSqFt, 0)
+    const classes = new Set(data.map((p) => p.category)).size
+    return { assets, cities, sf, classes }
+  }, [data])
+
   return (
     <>
       <Seo
@@ -82,6 +92,25 @@ export default function Properties() {
         alt="City skyline at night"
         description="A curated portfolio of institutional-grade commercial assets across India's principal growth markets."
       />
+
+      {/* Portfolio stats strip */}
+      <section className="border-b border-ink/10 bg-bone" aria-label="Portfolio at a glance">
+        <div className="container-x grid grid-cols-2 gap-x-6 gap-y-10 py-10 md:grid-cols-4 md:py-12">
+          {totals && (
+            <>
+              <MetricCounter value={totals.assets} label="Institutional Assets" />
+              <MetricCounter value={totals.cities} label="Markets" />
+              <MetricCounter
+                value={Math.round((totals.sf / 1_000_000) * 10) / 10}
+                suffix="M+"
+                decimals={1}
+                label="Square Feet"
+              />
+              <MetricCounter value={totals.classes} label="Asset Classes" />
+            </>
+          )}
+        </div>
+      </section>
 
       <section className="bg-bone py-16 md:py-24" aria-label="Property portfolio">
         <div className="container-x">

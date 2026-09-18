@@ -5,6 +5,7 @@ import { AnimatedButton } from '@/components/shared/AnimatedButton'
 import { SectionDivider } from '@/components/shared/SectionDivider'
 import { IMAGES } from '@/data/images'
 import { allocation, investmentPillars, trackRecord } from '@/data/company'
+import { caseStudies } from '@/data/caseStudies'
 import { Seo } from '@/components/seo/Seo'
 
 export default function Investments() {
@@ -130,11 +131,67 @@ export default function Investments() {
         </div>
       </section>
 
+      {/* Case studies */}
+      <section className="bg-sand py-20 md:py-28" aria-label="Featured outcomes">
+        <div className="container-x">
+          <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <SectionDivider index="04" label="Featured Outcomes" className="mb-6" />
+              <h2 className="serif-display text-3xl text-ink md:text-5xl">The work, in practice.</h2>
+            </div>
+            <p className="max-w-xs text-[0.6rem] uppercase tracking-[0.2em] leading-relaxed text-muted">
+              Illustrative case studies for demonstration.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {caseStudies.map((cs, i) => (
+              <Reveal key={cs.id} delay={i * 0.1}>
+                <article className="group flex h-full flex-col border border-ink/10 bg-white/40 transition-colors duration-500 hover:border-gold/40">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-ink">
+                    <img
+                      src={cs.image}
+                      alt={cs.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.05]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
+                    <div className="absolute bottom-4 left-5 flex items-center gap-3">
+                      <span className="eyebrow text-gold">{cs.category}</span>
+                      <span className="h-px w-5 bg-bone/40" aria-hidden="true" />
+                      <span className="text-[0.6rem] uppercase tracking-[0.22em] text-bone/70">
+                        {cs.location}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-1 flex-col p-6 md:p-7">
+                    <h3 className="serif-display text-xl text-ink transition-colors duration-300 group-hover:text-[#3a3a3a] md:text-2xl">
+                      {cs.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted">{cs.summary}</p>
+                    <div className="mt-auto grid grid-cols-3 gap-4 border-t border-ink/10 pt-5">
+                      {cs.metrics.map((m) => (
+                        <div key={m.label}>
+                          <p className="serif-display text-xl text-ink md:text-2xl">{m.value}</p>
+                          <p className="mt-1 text-[0.55rem] uppercase tracking-[0.18em] text-muted">
+                            {m.label}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Risk management + CTA */}
       <section className="bg-ink py-20 text-bone md:py-28" aria-label="Risk approach">
         <div className="container-x grid gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal>
-            <SectionDivider index="04" label="Risk" dark className="mb-8" />
+            <SectionDivider index="05" label="Risk" dark className="mb-8" />
             <h2 className="serif-display text-3xl text-bone md:text-4xl">Risk, underwritten before it is taken.</h2>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-bone/60 md:text-lg">
               Every investment is stress-tested against market, tenant and capital-cycle
@@ -173,7 +230,7 @@ export default function Investments() {
       <section className="bg-bone py-20 md:py-28" aria-label="Asset classes">
         <div className="container-x">
           <div className="mb-12">
-            <SectionDivider index="05" label="Asset Classes" className="mb-6" />
+            <SectionDivider index="06" label="Asset Classes" className="mb-6" />
             <h2 className="serif-display text-3xl text-ink md:text-5xl">Where we allocate capital.</h2>
           </div>
           <StrategyGrid />

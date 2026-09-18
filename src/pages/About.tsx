@@ -7,6 +7,7 @@ import { SectionDivider } from '@/components/shared/SectionDivider'
 import { AnimatedButton } from '@/components/shared/AnimatedButton'
 import { RevealLines, AnimatedWords } from '@/components/shared/AnimatedText'
 import { timeline } from '@/data/company'
+import { leaders } from '@/data/leaders'
 import { IMAGES } from '@/data/images'
 import { Seo } from '@/components/seo/Seo'
 
@@ -98,11 +99,48 @@ export default function About() {
         </div>
       </section>
 
+      {/* Leadership */}
+      <section className="bg-bone py-20 md:py-28" aria-label="Leadership">
+        <div className="container-x">
+          <div className="mb-14 md:mb-20">
+            <SectionDivider index="03" label="Leadership" className="mb-8" />
+            <h2 className="serif-display max-w-3xl text-[clamp(2.2rem,5vw,4.25rem)] text-ink">
+              THE PEOPLE WHO <span className="italic">OPERATE</span> THE PLATFORM.
+            </h2>
+          </div>
+          <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {leaders.map((leader, i) => (
+              <Reveal key={leader.name} delay={i * 0.08}>
+                <figure className="group">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-sand">
+                    <img
+                      src={leader.image}
+                      alt={`Portrait of ${leader.name}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.05]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <span className="absolute bottom-4 left-5 font-serif text-lg italic text-gold opacity-0 transition-all duration-500 group-hover:opacity-100">
+                      Vantage
+                    </span>
+                  </div>
+                  <figcaption className="pt-5">
+                    <h3 className="serif-display text-xl text-ink md:text-2xl">{leader.name}</h3>
+                    <p className="mt-1 eyebrow text-gold">{leader.role}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted">{leader.bio}</p>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Timeline */}
       <section className="bg-bone py-20 md:py-32" aria-label="History">
         <div className="container-x">
           <div className="mb-14 md:mb-20">
-            <SectionDivider index="03" label="Timeline" className="mb-8" />
+            <SectionDivider index="04" label="Timeline" className="mb-8" />
             <h2 className="serif-display text-[clamp(2.2rem,5vw,4.25rem)] text-ink">
               TWO DECADES OF <span className="italic">BUILDING.</span>
             </h2>
@@ -128,14 +166,71 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="bg-bone py-20 md:py-28">
-        <div className="container-x flex flex-col justify-between gap-8 md:flex-row md:items-end">
-          <h2 className="serif-display max-w-2xl text-[clamp(2.2rem,5vw,4rem)] text-ink">
-            <AnimatedWords text="LET'S BUILD SOMETHING DURABLE." />
-          </h2>
-          <AnimatedButton to="/contact" size="lg">
-            Get in touch
-          </AnimatedButton>
+      <section className="bg-bone py-20 md:py-32" aria-label="Get in touch">
+        <div className="container-x">
+          <div className="mb-10 md:mb-14">
+            <div className="flex items-center gap-4">
+              <span className="font-serif text-sm italic text-gold">◆</span>
+              <span className="h-px w-8 bg-line" aria-hidden="true" />
+              <span className="eyebrow text-muted">Get in touch</span>
+            </div>
+          </div>
+          <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-20">
+            <Reveal>
+              <h2 className="serif-display max-w-xl text-[clamp(2.6rem,5.5vw,4.75rem)] leading-[1.02] text-ink">
+                <AnimatedWords text="LET'S BUILD SOMETHING DURABLE." />
+              </h2>
+              <p className="mt-7 max-w-md text-base leading-relaxed text-muted md:text-lg">
+                A conversation is where it starts — whether you are leasing,
+                investing or partnering. We arrive prepared, and we respond
+                fast.
+              </p>
+              <div className="mt-10 flex flex-wrap items-center gap-6 md:gap-8">
+                <AnimatedButton to="/contact" size="lg">
+                  Get in touch
+                </AnimatedButton>
+                <a
+                  href="mailto:hello@vantage-demo.com"
+                  className="group flex items-center gap-2 text-sm text-ink transition-colors hover:text-gold"
+                >
+                  <span className="border-b border-ink/30 pb-1 transition-colors group-hover:border-gold">
+                    hello@vantage-demo.com
+                  </span>
+                </a>
+              </div>
+              <div className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-ink/10 pt-8">
+                {[
+                  { label: 'Response time', value: '< 24 hrs' },
+                  { label: 'Offices', value: 'Bengaluru · Mumbai · Delhi' },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <p className="text-[0.6rem] uppercase tracking-[0.24em] text-muted">{s.label}</p>
+                    <p className="mt-1.5 font-serif text-lg text-ink md:text-xl">{s.value}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal amount={0.3} delay={0.12} className="relative">
+              <div
+                className="absolute top-5 -left-5 hidden h-[calc(100%-1.25rem)] w-full border border-ink/10 lg:block"
+                aria-hidden="true"
+              />
+              <ParallaxImage
+                src={IMAGES.officeMeeting}
+                alt="Vantage leadership around a table in a working session"
+                className="aspect-[4/5] w-full"
+                speed={0.05}
+                reveal
+              />
+              <div className="absolute bottom-6 left-6 bg-ink px-6 py-4 text-bone shadow-2xl shadow-ink/20">
+                <p className="font-serif text-2xl italic text-gold">Ownership mindset</p>
+                <p className="mt-1 text-[0.6rem] uppercase tracking-[0.22em] text-bone/60">
+                  Since 2001
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
     </>

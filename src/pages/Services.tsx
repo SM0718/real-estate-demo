@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'framer-motion'
 import { services } from '@/data/services'
 import { PageHero } from '@/components/shared/PageHero'
 import { ParallaxImage } from '@/components/shared/ParallaxImage'
@@ -8,7 +9,35 @@ import { IMAGES } from '@/data/images'
 import { Seo } from '@/components/seo/Seo'
 import { cn } from '@/lib/utils'
 
+const engageSteps = [
+  {
+    number: '01',
+    title: 'Discover',
+    description:
+      'A structured brief on objectives, mandate and constraints — then a daily standup cadence with your deal team.',
+  },
+  {
+    number: '02',
+    title: 'Structure',
+    description:
+      'Underwriting, diligence and capital-structure engineering. Every assumption stress-tested before a term is set.',
+  },
+  {
+    number: '03',
+    title: 'Execute',
+    description:
+      'Acquisition or development delivery with design-led oversight, built-to-suit control and milestone governance.',
+  },
+  {
+    number: '04',
+    title: 'Operate & Optimize',
+    description:
+      'Active asset management through the hold — leasing, capex, tenant relationships and cyclical repositioning.',
+  },
+]
+
 export default function Services() {
+  const reduced = useReducedMotion()
   return (
     <>
       <Seo
@@ -79,6 +108,46 @@ export default function Services() {
           </section>
         )
       })}
+
+      {/* How we engage */}
+      <section className="bg-sand py-20 md:py-28" aria-label="How we engage">
+        <div className="container-x">
+          <SectionDivider index="→" label="How We Engage" className="mb-14" />
+          <div className="relative grid gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+            {/* Progress line */}
+            <motion.div
+              className="absolute top-0 left-0 hidden h-px w-full origin-left bg-ink/10 lg:block"
+              aria-hidden="true"
+            >
+              <motion.div
+                className="absolute inset-0 origin-left bg-gold"
+                initial={reduced ? { scaleX: 1 } : { scaleX: 0 }}
+                whileInView={reduced ? undefined : { scaleX: 1 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+              />
+            </motion.div>
+
+            {engageSteps.map((step, i) => (
+              <Reveal key={step.number} delay={i * 0.12}>
+                <div className="group pt-10 lg:pt-14">
+                  <span className="font-serif text-5xl italic text-gold transition-transform duration-500 group-hover:-translate-y-1 md:text-6xl">
+                    {step.number}
+                  </span>
+                  <h3 className="serif-display mt-5 text-2xl text-ink md:text-3xl">{step.title}</h3>
+                  <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted md:text-base">
+                    {step.description}
+                  </p>
+                  <span
+                    className="mt-6 block h-px w-0 bg-gold/70 transition-all duration-500 group-hover:w-16"
+                    aria-hidden="true"
+                  />
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="bg-ink py-20 text-bone md:py-28">
